@@ -1,11 +1,10 @@
 import urllib
-from bs4 import BeautifulSoup
+import json
 
 def score():
-	page = urllib.urlopen('http://static.cricinfo.com/rss/livescores.xml')
-	xml_obj = BeautifulSoup(page);
-	data = xml_obj.read().find_all('title')
-	for i in range(len(data)):
-		data[i].replace("<title>", "")
-		data[i].replace("</title>", "")
+	page = urllib.urlopen('http://pipes.yahoo.com/pipes/pipe.run?_id=tMcVGcqn3BGvsT__2R2EvQ&_render=json')
+	jsonObj = json.load(page)
+	data = []
+	for dict in jsonObj["value"]["items"]:
+		data.append(dict["title"])
 	return data
